@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -22,20 +22,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *
  */
 
+/* To tell the Spring this is the configuration class */
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	/* Use H2 database, but it could be MySQL, Oracle... etc.  */
 	@Autowired
 	DataSource dataSource;
+	@Autowired
+	UserDetailsService userDetailsService;
 	
-
+	
+	/* --Set up Authentication-- */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		//Set your configuration on the auth object
 		/*
-		 * Version 1: in memory authenticaiton
-		 * version 2: JDBC Authenticaiton
+		 * Version 1: in memory Authentication
+		 * version 2: JDBC Authentication
 		 * 
 		auth.inMemoryAuthentication()
 			.withUser("blah")
@@ -65,10 +69,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		
 		/*
 		 * Version 3: populate the database form SQL files
-		 * 
-		 */
+		 * 		   a: In-Memory DB H2 - on the fly
+		 * 		   b: JDBC connection 
 		auth.jdbcAuthentication()
 			.dataSource(dataSource);
+		*/
+		
+		/*
+		 * Version 4: use MySQL
+		 * 		Configure SpringSecurity to use userDeatilsService
+		 * 		inside userDetailsService, it load user info. from JPA
+		 */
+		auth.userDetailsService(userDetailsService);
+		
 		
 		/*
 		 *   Or from a costumized table schema, not from the deault one
@@ -83,6 +96,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 	}
 	
+	/* --Set up Authorization-- */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
