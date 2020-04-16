@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Miro-OAuth</title>
+<script type="text/javascript">
+	var logout = function() {
+	    $.post("/logout", function() {
+	        $("#user").html('');
+	        $(".unauthenticated").show();
+	        $(".authenticated").hide();
+	    })
+	    return true;
+	}
+</script>
+</head>
+<body>
+<h1> Welcome OAuth user!</h1>
+
+<div class="container authenticated">
+  Logged in as: <span id="user"></span>
+  <div>
+    <button onClick="logout()" class="btn btn-primary">Logout</button>
+  </div>
+</div>
+
+</body>
+</html>

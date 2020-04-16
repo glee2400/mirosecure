@@ -1,0 +1,46 @@
+##
+# OAUth2SSO client will look at... ->spring.io.guide 
+# 
+# Smaple: 
+#spring:
+#  social:
+#    facebook:
+#      app-id: 962223610477458
+#      app-secret: b7dfec28b08ac4e8c2a09cbac4662c15
+#    twitter:
+#      app-id: yix4Ai9xDbWBKV3yFPFGs8Nkf
+#      app-secret: 9rXtdeYe5v3wmGR5E96ubiXRDeWzZFgRt2ZYdgSKeQFivw0OtD
+
+##
+# Facebook - Working version
+#
+  security:
+    oauth2:
+      client:
+        clientId: ----
+        clientSecret: ---
+        accessTokenUri: https://graph.facebook.com/oauth/access_token
+        userAuthorizationUri: https://www.facebook.com/dialog/oauth
+        tokenName:  oauth_token
+        authenticationScheme: query
+        clientAuthenticationScheme: form
+      resource:
+        userInfoUri: https://graph.facebook.com/me
+
+
+##
+# Github - Working version
+#
+#  security:
+#    oauth2:
+#      client:
+#        clientId: bd1c0a783ccdd1c9b9e4
+#        clientSecret: 1a9030fbca47a5b2c28e92f19050bb77824b5ad1
+#        accessTokenUri: https://github.com/login/oauth/access_token
+#        userAuthorizationUri: https://github.com/login/oauth/authorize
+#        tokenName:  oauth_token
+#        authenticationScheme: query
+#        clientAuthenticationScheme: form
+#      resource:
+#        userInfoUri: https://api.github.com/user
+
